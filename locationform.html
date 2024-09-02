@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Form with Location</title>
+</head>
+<body>
+    <h2>Please fill out the form below:</h2>
+
+    <script>
+        // Your Google Form pre-filled URL
+        var formBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSdPGXBBi_-dsKtmCb1vvWNYHaWabhCHJCw4S6-gmZHCDOPIZA/viewform?usp=pp_url&entry.208346792=";
+
+        // Check if Geolocation is available
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // Get coordinates
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                // Prepare location data
+                var locationData = latitude + "," + longitude;
+
+                // Generate the full URL with the location data
+                var formURL = formBaseURL + encodeURIComponent(locationData);
+
+                // Redirect the user to the Google Form with the location data pre-filled
+                window.location.href = formURL;
+            }, function(error) {
+                console.error("Error obtaining location:", error);
+                alert("Could not get location. Please enable location services and try again.");
+            });
+        } else {
+            console.log("Geolocation is not available");
+            alert("Geolocation is not supported by your browser.");
+        }
+    </script>
+</body>
+</html>
